@@ -7,9 +7,12 @@ var length = 0;
 var newPassword = "";
 
 var createPassword = function () {
+  newPassword = ""
   for (var i = 0; i < length; i++) {
-    var index = Math.random(0, possibleCharacters.length - 1);
-    newPassword + possibleCharacters[index];
+    var index = Math.floor(
+      Math.random() * (possibleCharacters.length - 1 - 0) + 0
+    )
+    newPassword += possibleCharacters[index];
   }
 };
 
@@ -26,10 +29,9 @@ function generatePassword() {
         var pwLength = prompt(
           "Choose password length; must be between 8 and 128 characters."
         );
-        pwLength = parseInt(pwLength, 10);
-        if (pwLength < 8 || pwLength > 128) {
+        if (pwLength < 8 || pwLength > 128 || isNaN(pwLength)) {
           window.alert("Password length did not meet criteria.");
-          
+          return generatePassword(); 
         } else {
           length = pwLength;
         }
@@ -65,7 +67,7 @@ function generatePassword() {
           }
         } else {
           window.alert("At least one character type must be selected.");
-         
+         return generatePassword();
         }
         break;
     }
@@ -82,7 +84,7 @@ function generatePassword() {
     ];
     createPassword();
   } else if (possibleCharacters.length && !length) {
-    length = Math.random(8, 128);
+    length = Math.floor(Math.random() * (128 - 8) + 8)
     createPassword();
   } else {
     window.alert("At least one criteria must be defined.");
